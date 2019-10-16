@@ -2,6 +2,10 @@ const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 
+function resolve (dir) {
+  return path.join(__dirname, dir);
+}
+
 module.exports = env => {
   // console.log('NODE_ENV: ', env.NODE_ENV); // 'local'
   // console.log('Production: ', env.production); // true
@@ -10,6 +14,12 @@ module.exports = env => {
     output: {
       filename: 'main.[hash].js',
       path: path.resolve(__dirname, 'dist')
+    },
+    resolve: {
+      // 设置别名
+      alias: {
+        '@': resolve('src')
+      }
     },
     devtool: 'inline-source-map',
     devServer: {
@@ -29,6 +39,13 @@ module.exports = env => {
     ],
     module: {
       rules: [
+        {
+          test: /\.css$/,
+          use: [
+            'style-loader',
+            'css-loader'
+          ]
+        },
         {
           test: /\.svg$/,
           loader: 'svg-inline-loader',
