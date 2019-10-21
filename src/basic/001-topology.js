@@ -18,7 +18,8 @@ class Topology {
    */
   createLineGroup(otherAttr, centerX, centerY) {
     const group = createElement('g', {
-      style: 'cursor: pointer'
+      style: 'cursor: pointer',
+      'class': 'lineStyle'
     });
     const line1 = createElement('line', {
       x1: otherAttr.x,
@@ -69,7 +70,7 @@ class Topology {
     const cirle = createElement('circle', {
       cx: centerX,
       cy: centerY,
-      r: 60,
+      r: 48,
       fill: 'white',
       stroke: 'red',
       'stroke-width': 3
@@ -92,11 +93,11 @@ class Topology {
    * @param {Object} otherAttr 单个小圆组数据
    */
   createLittleCirle(otherAttr) {
-    const group = createElement('g', { style: 'cursor: pointer' });
+    const group = createElement('g', { style: 'cursor: pointer', 'class': 'circleStyle' });
     const cirle = createElement('circle', {
       cx: otherAttr.x,
       cy: otherAttr.y,
-      r: 40,
+      r: 36,
       fill: 'white',
       stroke: 'red',
       'stroke-width': 3,
@@ -115,21 +116,33 @@ class Topology {
     return group;
   }
   render() {
+    const otherNode = this.data.otherNode;
+    const circleNum = otherNode.length;
+    const angle = 360 / circleNum;
+    const centerR = 150;
+    otherNode.map((item, index) => {
+      const _angel = index * angle * Math.PI / 180;
+      item.x = Math.cos(_angel) * centerR + this.centerX;
+      item.y = Math.sin(_angel) * centerR + this.centerY;
+      return item;
+    });
+
     const svg = createElement('svg', {
       xmlns: 'http://www.w3.org/2000/svg',
       width: '100%',
       height: '100%'
     });
-    const centerGroup = this.createCenterCircle(this.centerX, this.centerY, this.data.centerNode.text);
-    svg.appendChild(centerGroup);
 
-    this.data.otherNode.forEach(attrs => {
+    otherNode.forEach(attrs => {
       svg.appendChild(this.createLineGroup(attrs, this.centerX, this.centerY));
     });
 
-    this.data.otherNode.forEach(attrs => {
+    otherNode.forEach(attrs => {
       svg.appendChild(this.createLittleCirle(attrs));
     });
+
+    const centerGroup = this.createCenterCircle(this.centerX, this.centerY, this.data.centerNode.text);
+    svg.appendChild(centerGroup);
 
     this.wrapper.appendChild(svg);
   }
