@@ -7,6 +7,9 @@
   height: 700px;
   padding-top: 10px;
   padding-left: 10px;
-  border-bottom: 1px solid #dcd;
+  background: #f9f9f9;
   box-sizing: border-box;
+}
+#app svg {
+  background: #fff;
 }

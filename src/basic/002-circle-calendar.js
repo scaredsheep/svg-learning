@@ -39,6 +39,8 @@ class Calendar {
    */
   gradientColorWithHSL(len, color) {
     color = color || [260, 59.8, 64.9];
+    // 数字28, lightness = (1 * 100 - 64.9) * 0.8，这样就达到了alphe通道预留20%透明度的效果
+    // 乘以100是百分数操作，其实与alphe通道计算透明度原理一样
     const delta = 28 / len;
     return new Array(len).fill(0).map((_, i) => {
       const c = [...color];
@@ -48,24 +50,18 @@ class Calendar {
       return `hsl(${c.join()})`;
     })
   }
+  createCircle() {
+    const circle = createElement('circle', {
+      cx: this.width / 2,
+      cy: this.height / 2,
+      r: Math.min(this.width, this.height) / 2,
+      fill: 'blue'
+    });
+    this.svg.appendChild(circle);
+  }
   render() {
-    // this.wrapper.appendChild(this.svg);
-    const arr1 = this.gradientColorWithAlphe(4);
-    const arr2 = this.gradientColorWithHSL(4);
-    const wrapper1 = document.createElement('p');
-    const wrapper2 = document.createElement('p');
-    arr1.forEach(color => {
-      const block = document.createElement('span');
-      block.setAttribute('style', `display: inline-block; width: 20px; height: 20px; background: ${color}`);
-      wrapper1.appendChild(block);
-    });
-    arr2.forEach(color => {
-      const block = document.createElement('span');
-      block.setAttribute('style', `display: inline-block; width: 20px; height: 20px; background: ${color}`);
-      wrapper2.appendChild(block);
-    });
-    this.wrapper.appendChild(wrapper1);
-    this.wrapper.appendChild(wrapper2);
+    this.createCircle();
+    this.wrapper.appendChild(this.svg);
   }
 }
 

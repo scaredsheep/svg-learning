@@ -1,0 +1,30 @@
+# svg各标签属性
+
+- svg
+  - xmlns：命名空间
+  - width：宽度
+  - height：高度
+  - viewBox：
+  - version：svg的版本，默认1.1
+- rect
+  - x：矩形左上角x轴坐标
+  - y：矩形左上角y轴坐标
+  - width：宽度
+  - height：高度
+  - fill：填充色
+  - stroke：边框颜色
+  - stroke-width：边框宽度
+- circle
+  - cx：圆心x轴坐标
+  - cy：圆心y轴坐标
+  - fill：填充色
+  - stroke：边框颜色
+  - stroke-width：边框宽度
+- line
+- path
+- text
+  - x
+  - y
+  - font-size
+  - text-anchor
+  - fill
